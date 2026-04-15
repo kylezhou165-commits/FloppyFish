@@ -56,7 +56,7 @@ public class GameView extends View {
 
     private void createInitialPipes() {
         for (int i = 0; i < PIPE_COUNT; i++) {
-            float x = (GameConstants.BASE_WIDTH) * i * 200 + (float)(Math.random() * 20);
+            float x =  200 + i * 200 + (float)(Math.random() * 20);
             float y = 80 + (float)(Math.random() * 250);
             pipes[i] = new Pipe(x, y);
         }
