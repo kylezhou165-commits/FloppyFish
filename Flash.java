@@ -60,7 +60,7 @@ public class Flash
         for(Card c : arr)
             copy.add(c);
             
-        stupidShuffle(copy, n);
+        stupidShuffle(copy);
         
         for(Card c : copy)
         {
@@ -68,23 +68,52 @@ public class Flash
         }
     }
     
-    private static void stupidShuffle(ArrayList arrTmp, int n)
-    {
-        for(int i = 0; i < n; i++)
-        {
- 
-            for(int ind = 0; ind < arrTmp.size() - 1; ind++)
-            {
-                if(Math.random() < 0.5)
-                {
-                   
-                    Object tmp = arrTmp.get(ind + 1);
-                    arrTmp.set(ind + 1, arrTmp.get(ind));
-                    arrTmp.set(ind, tmp);
-                }
-            }
-        }
+    private static void stupidShuffle(ArrayList<Card> arr)
+    { 
+        ArrayList<Card> tmp = new ArrayList<Card>();  
+        tmp.add(arr.get(0));
+       for(int i = 0; i < arr.size(); i++)
+       {
+        int index = (int)(Math.random()*i);
+        Card c = tmp.get(index);
+        tmp.set(index, arr.get(i));
+        tmp.add(i, c);
+       }
+       for(int i = 0; i < arr.size(); i++)
+       {
+        arr.set(i, tmp.get(i));
+       }
     }
     
+    public static class Card
+{
+    public String value;
+    public String answer;
     
+    public Card()
+    {
+        value = "";
+        answer = "";
+    }
+    
+    public Card(String v, String s)
+    {
+        value = v;
+        answer = s;
+    }
+    
+    public boolean equals(Card c)
+    {
+        if(!value.equals(c.value))
+            return false;
+        if(!answer.equals(c.answer))
+            return false;
+        return true;
+    }
+    
+    public String toString()
+    {
+        return value;
+    }
+}
 }
