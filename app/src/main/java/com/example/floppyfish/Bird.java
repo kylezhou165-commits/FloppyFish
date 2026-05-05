@@ -46,6 +46,8 @@ public class Bird {
     {
         return y;
     }
+    public void setY(float b) { y = b; }
+    public void setVelocity(float g) {velocity = g;}
     public float getSize()
     {
         return size;

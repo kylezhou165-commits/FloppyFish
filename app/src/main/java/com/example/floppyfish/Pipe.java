@@ -2,35 +2,51 @@ package com.example.floppyfish;
 
 import android.graphics.RectF;
 
-public class Pipe {
+public class Pipe
+{
     private float width = 52f;
     private float gapY = 110f;
     private float x;
     private float y; //top of the bottom pipe
     private RectF hitboxUp;
     private RectF hitboxDown;
-    public Pipe(float startX, float topY) {
+
+    public Pipe(float startX, float topY)
+    {
         x = startX; //Left point of pipe
         y = topY; //Right point of pipe
 
         hitboxUp = new RectF(x, 0f, x + width, y); //Hitbox for up
         hitboxDown = new RectF(x, y + gapY, x + width, GameConstants.BASE_HEIGHT); //Hitbox for lower
     }
-    public RectF getHitboxUp()
+
+    public void reset(float newX, float newY)
     {
-        return hitboxUp;
+        x = newX;
+        y = newY;
+        hitboxUp.set(x, 0f, x + width, y);
+        hitboxDown.set(x, y + gapY, x + width, GameConstants.BASE_HEIGHT);
     }
-    public RectF getHitboxDown()
+
+    public RectF getHitboxUp() {return hitboxUp;}
+
+    public RectF getHitboxDown(float virtualHeight)
     {
+        hitboxDown.bottom = virtualHeight;
         return hitboxDown;
     }
-    public void update(float speed) {
+
+    public void update(float speed)
+    {
         x -= speed;
         hitboxUp.offset(-speed, 0);
         hitboxDown.offset(-speed, 0);
     }
 
-    public boolean isOffScreen() {
+    public float getX() {return x;}
+
+    public boolean isOffScreen()
+    {
         return x + width < 0;
     }
 }
