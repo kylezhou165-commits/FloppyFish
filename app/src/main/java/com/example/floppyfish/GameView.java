@@ -23,22 +23,21 @@ public class GameView extends View
     public GameView(Context context)
     {
         super(context);
-        init();
-    }
-
-    public GameView(Context context, AttributeSet attrs)
-    {
-        super(context, attrs);
-        init();
-    }
-
-    private void init()
-    {
         bird = new Bird(100, 200);
         createInitialPipes();
         lastTime = System.nanoTime();
         setOnClickListener(v -> bird.jump());
     }
+
+    public GameView(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+        bird = new Bird(100, 200);
+        createInitialPipes();
+        lastTime = System.nanoTime();
+        setOnClickListener(v -> bird.jump());
+    }
+
 
     private void createInitialPipes()
     {
