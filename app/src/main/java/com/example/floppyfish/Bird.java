@@ -1,5 +1,8 @@
 package com.example.floppyfish;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.RectF;
 
 public class Bird {
@@ -8,14 +11,16 @@ public class Bird {
     private float x;                   // center or left position
     private float y;                   // top position
     private float velocity = 0f;       // vertical speed
-
+    private Bitmap fish;
+    ;
     private RectF hitbox;
 
-    public Bird(float startX, float startY) {
+    public Bird(Context context, float startX, float startY, int resourceId) {
         x = startX;
         y = startY;
-
         hitbox = new RectF(x, y, x + size, y + size);
+        Bitmap rawFish = BitmapFactory.decodeResource(context.getResources(), resourceId);
+        fish = rawFish.createScaledBitmap(rawFish, 64, 64, true );
     }
 
     public void update(float dt) {
@@ -38,18 +43,24 @@ public class Bird {
         return hitbox;
     }
 
-    public float getX()
-    {
+    public float getX() {
         return x;
     }
-    public float getY()
-    {
+
+    public float getY() {
         return y;
     }
-    public void setY(float b) { y = b; }
-    public void setVelocity(float g) {velocity = g;}
-    public float getSize()
-    {
+
+    public void setY(float b) {
+        y = b;
+    }
+
+    public void setVelocity(float g) {
+        velocity = g;
+    }
+
+    public float getSize() {
         return size;
     }
+    public Bitmap getBitmap() {return fish;}
 }

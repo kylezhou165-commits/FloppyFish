@@ -11,31 +11,38 @@ import android.view.View;
 public class GameView extends View
 {
     private static final int PIPE_COUNT = 5;
-    private Bird bird;
-    private Pipe[] pipes = new Pipe[PIPE_COUNT];
+    private final Bird bird;
+    private  Pipe[] pipes = new Pipe[PIPE_COUNT];
     private long lastTime;
     private float scale = 1f;
     private float offsetX = 0f;
     private float offsetY = 0f;
     private float virtualHeight = 0f;
     private int score = 0;
-
+    Paint birdPaint = new Paint();
+    Paint pipePaint = new Paint();
     public GameView(Context context)
     {
         super(context);
-        bird = new Bird(100, 200);
+        bird = new Bird(context, 100, 200, R.drawable.greenfish);
         createInitialPipes();
         lastTime = System.nanoTime();
         setOnClickListener(v -> bird.jump());
+        birdPaint.setColor(Color.YELLOW);
+        pipePaint.setColor(Color.GREEN);
+
     }
 
     public GameView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
-        bird = new Bird(100, 200);
+        bird = new Bird(context, 100, 200, R.drawable.greenfish);
         createInitialPipes();
         lastTime = System.nanoTime();
         setOnClickListener(v -> bird.jump());
+        birdPaint.setColor(Color.YELLOW);
+        pipePaint.setColor(Color.GREEN);
+
     }
 
 
@@ -98,17 +105,13 @@ public class GameView extends View
         lastTime = now;
         update(dt);
 
-        Paint birdPaint = new Paint();
-        birdPaint.setColor(Color.YELLOW);
-        Paint pipePaint = new Paint();
-        pipePaint.setColor(Color.GREEN);
 
         canvas.drawColor(Color.CYAN);
         canvas.save();
         canvas.translate(offsetX, offsetY);
         canvas.scale(scale, scale);
+        canvas.drawBitmap(bird.getBitmap(), bird.getX(), bird.getY(), null);
 
-        canvas.drawRect(bird.getHitbox(), birdPaint);
         for (int i = 0; i < PIPE_COUNT; i++)
         {
             Pipe p = pipes[i];
@@ -121,6 +124,7 @@ public class GameView extends View
     private void resetGame()
     {
         bird.setY(200);
+        bird.setVelocity(0f);
         createInitialPipes();
         lastTime = System.nanoTime();
     }
