@@ -2,58 +2,54 @@ package com.example.floppyfish;
 
 import android.graphics.RectF;
 
-public class Pipe
-{
-    private float width = 52f;
-    private float gapY = 110f;
-    private float x;
-    private float y; //top of the bottom pipe
-    private RectF hitboxUp;
-    private RectF hitboxDown;
+public class Bird {
 
-    public Pipe(float startX, float topY)
-    {
-        x = startX; //Left point of pipe
-        y = topY; //Right point of pipe
+    private float size = 24f;          // square size
+    private float x;                   // center or left position
+    private float y;                   // top position
+    private float velocity = 0f;       // vertical speed
 
-        hitboxUp = new RectF(x, 0f, x + width, y); //Hitbox for up
-        hitboxDown = new RectF(x, y + gapY, x + width, GameConstants.BASE_HEIGHT); //Hitbox for lower
+    private RectF hitbox;
+
+    public Bird(float startX, float startY) {
+        x = startX;
+        y = startY;
+
+        hitbox = new RectF(x, y, x + size, y + size);
     }
 
-    public void reset(float newX, float newY)
-    {
-        x = newX;
-        y = newY;
-        hitboxUp.set(x, 0f, x + width, y);
-        hitboxDown.set(x, y + gapY, x + width, GameConstants.BASE_HEIGHT);
+    public void update(float dt) {
+        velocity += GameConstants.GRAVITY * dt;
+
+        if (velocity > GameConstants.MAX_FALL_SPEED) {
+            velocity = GameConstants.MAX_FALL_SPEED;
+        }
+
+        y += velocity * dt;
+
+        hitbox.set(x, y, x + size, y + size);
     }
 
-    public RectF getHitboxUp() {return hitboxUp;}
-
-    public RectF getHitboxDown(float virtualHeight)
-    {
-        hitboxDown.bottom = virtualHeight;
-        return hitboxDown;
+    public void jump() {
+        velocity = -GameConstants.JUMP_POWER;
     }
 
-    public void update(float speed)
-    {
-        x -= speed;
-        hitboxUp.offset(-speed, 0);
-        hitboxDown.offset(-speed, 0);
+    public RectF getHitbox() {
+        return hitbox;
     }
 
-    public float getX() {return x;}
-
-    public boolean isOffScreen()
+    public float getX()
     {
-        return x + width < 0;
+        return x;
     }
-    public boolean isPassed(Fish fish)
+    public float getY()
     {
-        if(fish.getX() > x)
-            return true;
-        else
-            return false;
+        return y;
+    }
+    public void setY(float b) { y = b; }
+    public void setVelocity(float g) {velocity = g;}
+    public float getSize()
+    {
+        return size;
     }
 }
