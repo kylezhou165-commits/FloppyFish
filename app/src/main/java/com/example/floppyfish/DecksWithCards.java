@@ -2,7 +2,7 @@
 package com.FloppyFish;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-public class UserWithBooks 
+public class DecksWithCards 
 {
     @Embedded 
     public User deck;
