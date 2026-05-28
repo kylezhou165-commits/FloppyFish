@@ -15,4 +15,19 @@ public interface DeckDAO
   @Transaction
   @Query("SELECT * FROM Flashcard where deckContainter = :deckNumber")
   public List<decksWithCards> getFlashcardsByDeck(int deckNumber);
+
+  @Insert 
+  int insertDeck(Deck deck);
+
+  @Insert
+` void insertFlashcards(List<Flashcard> flashcards);
+
+  @Update 
+  void updateDeck(Deck deck);
+
+  @Update
+  void updateFlashcard(List<Flashcard> flashcards);
+
+  @Delete
+  void deleteDeck(Deck deck);
 }
