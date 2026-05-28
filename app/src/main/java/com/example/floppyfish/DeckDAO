@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey;
 public interface DeckDAO
 {
   @Transaction
-  @Query("SELECT * FROM DECK")
+  @Query("SELECT * FROM Deck")
   public List<decksWithCards> getDecksWithCards();
 
   @Transaction
