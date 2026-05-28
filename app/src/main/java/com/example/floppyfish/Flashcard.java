@@ -1,16 +1,17 @@
-/*
-@Entity 
-public class Flashcard
+package com.FloppyFish;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
+public class Deck 
 {
-  @PrimaryKey
-  public int deckContainer; 
-  public int cardNumber;
-  
+    @PrimaryKey(autoGenerate = true)
+    public int deckNumber;
 
-  @ColumnInfo(name = "value")
-  public String value;
+    public Deck() {}
 
-  @ColumnInfo(name = "answer")
-  public String answer;
+    public Deck(int deckNumber) 
+    {
+        this.deckNumber = deckNumber;
+    }
 }
-*/
