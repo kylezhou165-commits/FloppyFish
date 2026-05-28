@@ -1,6 +1,6 @@
 /*
 @Entity 
-public class Decks
+public class Deck
 {
   @PrimaryKey
   public int deckNumber; 
