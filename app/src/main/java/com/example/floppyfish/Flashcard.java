@@ -1,3 +1,4 @@
+/*
 package com.FloppyFish;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -15,3 +16,4 @@ public class Deck
         this.deckNumber = deckNumber;
     }
 }
+*/
