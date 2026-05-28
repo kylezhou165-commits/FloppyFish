@@ -1,0 +1,18 @@
+/*
+
+package com.FloppyFish;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Dao
+
+public interface DeckDAO
+{
+  @Transaction
+  @Query("SELECT * FROM DECK")
+  public List<decksWithCards> getDecksWithCards();
+
+  @Transaction
+  @Query("SELECT * FROM Flashcard where deckContainter = :deckNumber")
+  public List<decksWithCards> getFlashcardsByDeck(int deckNumber);
+}
