@@ -15,14 +15,13 @@ public interface DeckDAO
 {
   @Transaction
   @Query("SELECT * FROM Deck")
-  public List<DecksWithCards> getDecksWithCards();
+  List<DecksWithCards> getDecksWithCards();
 
-  @Transaction
-  @Query("SELECT * FROM Flashcard where deckContainer = :deckNumber")
-  public List<DecksWithCards> getFlashcardsByDeck(int deckNumber);
+  @Query("SELECT * FROM Flashcard WHERE deckContainer = :deckNumber")
+  List<Flashcard> getFlashcardsByDeck(int deckNumber);
 
   @Insert
-  int insertDeck(Deck deck);
+  long insertDeck(Deck deck);
 
   @Insert
   void insertFlashcards(List<Flashcard> flashcards);
