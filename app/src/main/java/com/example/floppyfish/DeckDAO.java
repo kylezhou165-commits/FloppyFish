@@ -1,8 +1,13 @@
-/*
-
-package com.FloppyFish;
+package com.example.floppyfish;
+import androidx.room.Delete;
 import androidx.room.Entity;
+import androidx.room.Insert;
 import androidx.room.PrimaryKey;
+import androidx.room.Query;
+import androidx.room.Transaction;
+import androidx.room.Update;
+
+import java.util.List;
 
 @Dao
 
@@ -16,13 +21,13 @@ public interface DeckDAO
   @Query("SELECT * FROM Flashcard where deckContainter = :deckNumber")
   public List<decksWithCards> getFlashcardsByDeck(int deckNumber);
 
-  @Insert 
+  @Insert
   int insertDeck(Deck deck);
 
   @Insert
-` void insertFlashcards(List<Flashcard> flashcards);
+  void insertFlashcards(List<Flashcard> flashcards);
 
-  @Update 
+  @Update
   void updateDeck(Deck deck);
 
   @Update

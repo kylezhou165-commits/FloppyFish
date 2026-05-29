@@ -1,3 +1,4 @@
+package com.example.floppyfish;
 public class Card
 {
     public String value;

@@ -1,11 +1,16 @@
-/*
-package com.FloppyFish;
+
+package com.example.floppyfish;
+import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-public class DecksWithCards 
+import androidx.room.Relation;
+
+import java.util.List;
+
+public class DecksWithCards
 {
-    @Embedded 
-    public User deck;
+    @Embedded
+    public Deck deck;
 
     @Relation(
         parentColumn = "deckNumber",    
@@ -13,4 +18,4 @@ public class DecksWithCards
     )
     public List<Flashcard> Flashcards;
 }
-*/
+

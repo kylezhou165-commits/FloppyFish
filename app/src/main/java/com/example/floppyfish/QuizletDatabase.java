@@ -1,3 +1,4 @@
+package com.example.floppyfish;
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
 

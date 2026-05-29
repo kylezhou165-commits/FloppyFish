@@ -1,5 +1,5 @@
-/*
-package com.FloppyFish;
+
+package com.example.floppyfish;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -16,4 +16,4 @@ public class Deck
     this.deckNumber = deckNumber;
   }
 }
-*/
+

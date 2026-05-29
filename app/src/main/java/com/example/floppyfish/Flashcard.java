@@ -1,19 +1,20 @@
-/*
-package com.FloppyFish;
+
+package com.example.floppyfish;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class Deck 
+public class Flashcard
 {
     @PrimaryKey(autoGenerate = true)
-    public int deckNumber;
+    public int deckContainer;
+    public int cardNumber;
 
-    public Deck() {}
+    public Flashcard() {}
 
-    public Deck(int deckNumber) 
+    public Flashcard(int deckContainer)
     {
-        this.deckNumber = deckNumber;
+        this.deckContainer = deckContainer;
     }
 }
-*/
+
