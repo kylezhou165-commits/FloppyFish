@@ -7,8 +7,7 @@ import androidx.room.PrimaryKey;
 public class Deck
 {
   @PrimaryKey (autoGenerate = true)
-  public int deckNumber; 
-
+  public int deckNumber;
   public Deck() {}
 
   public Deck(int deckNumber)
