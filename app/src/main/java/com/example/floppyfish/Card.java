@@ -1,7 +1,9 @@
+package com.example.floppyfish;
 public class Card
 {
     public String value;
     public String answer;
+    public boolean flipped;
     
     public Card()
     {
@@ -23,9 +25,27 @@ public class Card
             return false;
         return true;
     }
-    
-    public String toString()
+
+    public String getValue()
     {
         return value;
+    }
+
+    public String getAnswer()
+    {
+        return answer;
+    }
+
+    public boolean getFlipped()
+    {
+        return flipped;
+    }
+
+    public void flip()
+    {
+        if(flipped == true)
+            flipped = false;
+        else
+            flipped = true;
     }
 }

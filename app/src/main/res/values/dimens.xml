@@ -1,3 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="buttonwidth">160dp</dimen>
+    <dimen name="buttonheight">50dp</dimen>
+    <dimen name="buttonts">15sp</dimen>
+    <dimen name="subtitlesize">50sp</dimen>
 </resources>

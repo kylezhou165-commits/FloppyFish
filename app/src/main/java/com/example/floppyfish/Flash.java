@@ -1,5 +1,5 @@
+package com.example.floppyfish;
 import java.util.*;
-
 public class Flash 
 {
     public ArrayList<Card> arr;

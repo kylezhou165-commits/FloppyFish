@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">FloppyFish</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name = "card_defs">
+        <item>Apple</item>
+        <item>Beans</item>
+        <item>Cheese</item>
+        <item>Durian</item>
+        <item>Eggplant</item>
+        <item>Fish</item>
+        <item>Garlic</item>
+        <item>Ham</item>
+        <item>Happy Birthday Reisa</item>
+    </string-array>
+
+    <string-array name = "card_anses">
+        <item>Fruit</item>
+        <item>Vegetable</item>
+        <item>Dairy</item>
+        <item>Fruit</item>
+        <item>Fruit</item>
+        <item>Meat</item>
+        <item>Vegetable</item>
+        <item>Meat</item>
+        <item>yayyy</item>
+    </string-array>
 </resources>
