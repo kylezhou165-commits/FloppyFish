@@ -30,7 +30,7 @@ public interface DeckDAO
   void updateDeck(Deck deck);
 
   @Update
-  void updateFlashcard(List<Flashcard> flashcards);
+  void updateFlashcards(List<Flashcard> flashcards);
 
   @Delete
   void deleteDeck(Deck deck);
