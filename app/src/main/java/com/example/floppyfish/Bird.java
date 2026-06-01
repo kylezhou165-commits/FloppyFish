@@ -12,15 +12,14 @@ public class Bird {
     private float y;                   // top position
     private float velocity = 0f;       // vertical speed
     private Bitmap fish;
-    ;
     private RectF hitbox;
 
     public Bird(Context context, float startX, float startY, int resourceId) {
         x = startX;
         y = startY;
         hitbox = new RectF(x, y, x + size, y + size);
-        Bitmap rawFish = BitmapFactory.decodeResource(context.getResources(), resourceId);
-        fish = rawFish.createScaledBitmap(rawFish, 64, 64, true );
+        Bitmap badFish = BitmapFactory.decodeResource(context.getResources(), resourceId);
+        fish = badFish.createScaledBitmap(badFish, 24, 24, true );
     }
 
     public void update(float dt) {
