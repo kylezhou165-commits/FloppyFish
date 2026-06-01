@@ -1,5 +1,6 @@
 package com.example.floppyfish;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -19,6 +20,10 @@ public class MainActivity extends AppCompatActivity {
     Button cardsButton;
     Button gameButton;
     Button cardReturnButton;
+
+    RecyclerView recyclerView;
+    RecyclerViewAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,14 +34,12 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 
             cardSetUp();
-
-            RecyclerView recyclerView = findViewById(R.id.notelist);
-            RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, cd);
+            gameButton = findViewById(R.id.gameb);
+            recyclerView = findViewById(R.id.notelist);
+            adapter = new RecyclerViewAdapter(this, cd);
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
             cardsButton = findViewById(R.id.cardb);
-            gameButton = findViewById(R.id.gameb);
             cardReturnButton = findViewById(R.id.returnB);
 
             cardsButton.setOnClickListener(view -> setContentView(R.layout.notecards));
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
     }
+
 
     private void cardSetUp()
     {
