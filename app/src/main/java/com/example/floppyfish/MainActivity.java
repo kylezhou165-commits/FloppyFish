@@ -2,6 +2,7 @@ package com.example.floppyfish;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
@@ -9,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,10 +22,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Card> cd = new ArrayList<>();
     Button cardsButton;
     Button gameButton;
-    Button cardReturnButton;
 
-    RecyclerView recyclerView;
-    RecyclerViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,17 +35,18 @@ public class MainActivity extends AppCompatActivity {
 
             cardSetUp();
             gameButton = findViewById(R.id.gameb);
-            recyclerView = findViewById(R.id.notelist);
-            adapter = new RecyclerViewAdapter(this, cd);
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
             cardsButton = findViewById(R.id.cardb);
-            cardReturnButton = findViewById(R.id.returnB);
-
-            cardsButton.setOnClickListener(view -> setContentView(R.layout.notecards));
-
-            cardReturnButton.setOnClickListener(view -> setContentView(R.layout.activity_main));
-
+            cardsButton.setOnClickListener(new View.OnClickListener()
+            {
+                public void onClick(View v)
+                {
+                    Fragment_Quizlet frag = new Fragment_Quizlet();
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.add(R.id.fragment_container, frag);
+                    fragmentTransaction.commit();
+                }
+            });
             return insets;
         });
     }

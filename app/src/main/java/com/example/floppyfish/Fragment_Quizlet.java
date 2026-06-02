@@ -1,0 +1,70 @@
+package com.example.floppyfish;
+
+
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import android.content.Context;
+
+import android.widget.Button;
+
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+public class Fragment_Quizlet extends Fragment {
+    Button cardReturnButton;
+    ArrayList<Card> cd = new ArrayList<>();
+    RecyclerView recyclerView;
+    RecyclerViewAdapter adapter;
+
+    public Fragment_Quizlet() {
+
+        super(R.layout.notecards);
+    }
+
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup view, Bundle savedInstanceState)
+
+    {
+        return inflater.inflate(R.layout.notecards, view, false);
+    }
+
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Context context = getContext();
+        cardSetUp();
+        recyclerView = view.findViewById(R.id.notelist);
+        adapter = new RecyclerViewAdapter(context, cd);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        cardReturnButton = view.findViewById(R.id.returnB);
+        cardReturnButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                getParentFragmentManager().beginTransaction()
+                        .remove(Fragment_Quizlet.this)
+                        .commit();
+            }
+        });
+    }
+
+
+    private void cardSetUp() {
+        String[] defs = getResources().getStringArray(R.array.card_defs);
+        String[] anses = getResources().getStringArray(R.array.card_anses);
+
+        for (int i = 0; i < defs.length; i++) {
+            String a = defs[i];
+            String b = anses[i];
+            cd.add(new Card(a, b));
+        }
+    }
+}
+
