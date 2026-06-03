@@ -1,14 +1,24 @@
 package com.example.floppyfish;
 
+
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+
+import android.graphics.PixelFormat;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.view.View;
 
-public class GameView extends View
+import android.util.Log;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+
+import androidx.annotation.NonNull;
+
+
+public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Callback
 {
     private static final int PIPE_COUNT = 5;
     private final Bird bird;
@@ -21,21 +31,29 @@ public class GameView extends View
     private int score = 0;
     Paint birdPaint = new Paint();
     Paint pipePaint = new Paint();
+    public boolean running = true;
+
+    private SurfaceHolder mSurfaceHolder;
+    private Thread gameThread;
     public GameView(Context context)
     {
         super(context);
+        mSurfaceHolder = getHolder();
+        mSurfaceHolder.addCallback(this);
         bird = new Bird(context, 100, 200, R.drawable.greenfish);
         createInitialPipes();
         lastTime = System.nanoTime();
         setOnClickListener(v -> bird.jump());
         birdPaint.setColor(Color.YELLOW);
         pipePaint.setColor(Color.GREEN);
-
+        setZOrderOnTop(true);
+        getHolder().setFormat(PixelFormat.TRANSLUCENT);
     }
 
     public GameView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
+        mSurfaceHolder = getHolder();
         bird = new Bird(context, 100, 200, R.drawable.greenfish);
         createInitialPipes();
         lastTime = System.nanoTime();
@@ -87,6 +105,7 @@ public class GameView extends View
             first.reset(nX, nY);
             pipes[PIPE_COUNT - 1] = first;
         }
+
     }
 
     protected void onSizeChanged(int w, int h, int oldw, int oldh)
@@ -98,28 +117,55 @@ public class GameView extends View
         offsetY = 0;
     }
 
-    protected void onDraw(Canvas canvas)
+
+    public void run()
     {
-        long now = System.nanoTime();
-        float dt = (now - lastTime) / 1_000_000_000f;
-        lastTime = now;
-        update(dt);
-
-
-        canvas.drawColor(Color.CYAN);
-        canvas.save();
-        canvas.translate(offsetX, offsetY);
-        canvas.scale(scale, scale);
-        canvas.drawBitmap(bird.getBitmap(), bird.getX(), bird.getY(), null);
-
-        for (int i = 0; i < PIPE_COUNT; i++)
+        while (running)
         {
-            Pipe p = pipes[i];
-            canvas.drawRect(p.getHitboxUp(), pipePaint);
-            canvas.drawRect(p.getHitboxDown(virtualHeight), pipePaint);
+            if (!mSurfaceHolder.getSurface().isValid()) continue;
+            Canvas canvas = mSurfaceHolder.lockCanvas();
+            if (canvas != null)
+            {
+                long now = System.nanoTime();
+                float dt = (now - lastTime) / 1_000_000_000f;
+                lastTime = now;
+                update(dt);
+                canvas.drawColor(Color.MAGENTA);
+                canvas.drawColor(Color.CYAN);
+                canvas.save();
+                canvas.translate(offsetX, offsetY);
+                canvas.scale(scale, scale);
+                canvas.drawBitmap(bird.getBitmap(), bird.getX(), bird.getY(), null);
+
+                for (int i = 0; i < PIPE_COUNT; i++)
+                {
+                    Pipe p = pipes[i];
+                    canvas.drawRect(p.getHitboxUp(), pipePaint);
+                    canvas.drawRect(p.getHitboxDown(virtualHeight), pipePaint);
+                }
+                mSurfaceHolder.unlockCanvasAndPost(canvas);
+
+            }
         }
-        canvas.restore();
-        invalidate();
+    }
+    public void resume()
+    {
+        running = true;
+        gameThread = new Thread(this);
+        gameThread.start();
+    }
+    public void pause()
+    {
+        running = false;
+        if (gameThread != null)
+        {
+            try {
+                gameThread.join(500);
+                gameThread = null;
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
     private void resetGame()
     {
@@ -128,4 +174,19 @@ public class GameView extends View
         createInitialPipes();
         lastTime = System.nanoTime();
     }
+
+    public void surfaceChanged(@NonNull SurfaceHolder holder, int format, int width, int height) {
+
+    }
+
+    public void surfaceCreated(@NonNull SurfaceHolder holder)
+    {
+        resume();
+    }
+
+    public void surfaceDestroyed(@NonNull SurfaceHolder holder)
+    {
+        pause();
+    }
+
 }
