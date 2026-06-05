@@ -1,5 +1,8 @@
 package com.example.floppyfish;
-public class Card
+
+import java.io.Serializable;
+
+public class Card implements Serializable
 {
     public String value;
     public String answer;
