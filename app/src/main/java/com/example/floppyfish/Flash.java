@@ -4,7 +4,11 @@ public class Flash
 {
     private ArrayList<Card> arr;
     private int pointer = 0;
-    
+
+    public ArrayList<Card> getCards()
+    {
+        return arr;
+    }
     public Flash()
     {
         arr = new ArrayList<Card>();
@@ -23,7 +27,11 @@ public class Flash
         
         Card tmp = arr.remove(i);
     }
-    
+
+    public Card getTop()
+    {
+        return arr.get(pointer);
+    }
     public Card nextCard()
     {
         if(pointer < arr.size())

@@ -20,13 +20,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 public class Fragment_Quizlet extends Fragment {
     Button cardReturnButton;
-    ArrayList<Card> cd = new ArrayList<>();
+    private Flash flash;
     RecyclerView recyclerView;
     RecyclerViewAdapter adapter;
 
     public Fragment_Quizlet() {
 
         super(R.layout.notecards);
+        flash = new Flash();
     }
 
 
@@ -42,7 +43,7 @@ public class Fragment_Quizlet extends Fragment {
         Context context = getContext();
         cardSetUp();
         recyclerView = view.findViewById(R.id.notelist);
-        adapter = new RecyclerViewAdapter(context, cd);
+        adapter = new RecyclerViewAdapter(context, flash);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         cardReturnButton = view.findViewById(R.id.returnB);
@@ -63,7 +64,7 @@ public class Fragment_Quizlet extends Fragment {
         for (int i = 0; i < defs.length; i++) {
             String a = defs[i];
             String b = anses[i];
-            cd.add(new Card(a, b));
+            flash.add(a, b);
         }
     }
 }

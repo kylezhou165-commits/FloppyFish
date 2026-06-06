@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<Card> cd = new ArrayList<>();
+    Flash flash = new Flash();
     Button cardsButton;
     Button gameButton;
 
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         {
             String a = defs[i];
             String b = anses[i];
-            cd.add(new Card(a, b));
+            flash.add(a,b);
         }
     }
 

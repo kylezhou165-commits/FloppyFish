@@ -14,11 +14,11 @@ import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>{
     Context context;
-    ArrayList<Card> cards;
-    public RecyclerViewAdapter(Context context, ArrayList<Card> cards)
+    Flash flash;
+    public RecyclerViewAdapter(Context context, Flash flash)
     {
         this.context = context;
-        this.cards = cards;
+        this.flash = flash;
     }
     @NonNull
     @Override
@@ -30,8 +30,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        ArrayList<Card> cards = flash.getCards();
 
-        if (cards.get(position).getFlipped() == true)
+        if (cards.get(position).getFlipped())
             holder.text.setText(cards.get(position).getAnswer());
         else
             holder.text.setText(cards.get(position).getValue());
@@ -48,7 +49,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return cards.size() / 2;
+        return flash.getCards().size() / 2;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
