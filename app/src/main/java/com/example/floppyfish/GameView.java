@@ -97,6 +97,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
 
         aurabackground = BitmapFactory.decodeResource(con.getResources(), R.drawable.background);
+
     }
 
 
@@ -169,6 +170,10 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
     public void run()
     {
+        Bitmap stairs = BitmapFactory.decodeResource(con.getResources(), R.drawable.stairs);
+        if(auraMonster)
+            aurabackground = aurabackground.createScaledBitmap(aurabackground, getWidth(), getHeight(), true );
+
         while (running)
         {
             if (!mSurfaceHolder.getSurface().isValid()) continue;
@@ -199,7 +204,6 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
                     }
                     else
                     {
-                        Bitmap stairs = BitmapFactory.decodeResource(con.getResources(), R.drawable.stairs);
                         RectF topper = p.getHitboxUp();
                         RectF bopper = p.getHitboxDown(virtualHeight);
                         Bitmap up = stairs.createScaledBitmap(stairs, (int)p.getWidth()*3, (int)topper.bottom, true );
