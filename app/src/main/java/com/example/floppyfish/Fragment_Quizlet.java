@@ -2,6 +2,7 @@ package com.example.floppyfish;
 
 
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,10 +25,13 @@ public class Fragment_Quizlet extends Fragment {
     RecyclerView recyclerView;
     RecyclerViewAdapter adapter;
 
-    public Fragment_Quizlet() {
+    MediaPlayer m;
+
+    public Fragment_Quizlet(MediaPlayer mp) {
 
         super(R.layout.notecards);
         flash = new Flash();
+        m = mp;
     }
 
 

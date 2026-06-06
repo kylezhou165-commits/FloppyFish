@@ -45,19 +45,21 @@ public class MainActivity extends AppCompatActivity {
             cardsButton = findViewById(R.id.cardb);
             auraButton = findViewById(R.id.tempfish);
 
-            mp = new MediaPlayer();
-            mp.setAudioAttributes(
-                    new AudioAttributes.Builder()
-                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                            .setUsage(AudioAttributes.USAGE_MEDIA)
-                            .build()
-            );
+            if(firstTime)
+            {
+                mp = new MediaPlayer();
+                mp.setAudioAttributes(
+                        new AudioAttributes.Builder()
+                                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                                .setUsage(AudioAttributes.USAGE_MEDIA)
+                                .build()
+                );
 
-            mp = MediaPlayer.create(this, R.raw.menue);
+                mp =  MediaPlayer.create(this, R.raw.menue);
 
-            mp.setLooping(true);
-            if(firstTime) {
-                mp.start();
+                mp.setLooping(true);
+
+                    mp.start();
             }
 
             firstTime = false;
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             {
                 public void onClick(View v)
                 {
-                    Fragment_Quizlet frag = new Fragment_Quizlet();
+                    Fragment_Quizlet frag = new Fragment_Quizlet(mp);
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.add(R.id.fragment_container_menu, frag);
