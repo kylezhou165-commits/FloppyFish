@@ -62,6 +62,10 @@ public class Pipe
     }
     public float getX() {return x;}
 
+    public float getY() {return y;}
+
+    public float getGapY(){return gapY;}
+
     public boolean isOffScreen()
     {
         return x + width < 0;

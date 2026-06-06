@@ -60,6 +60,7 @@ public class Bird {
         return x;
     }
 
+
     public float getY() {
         return y;
     }

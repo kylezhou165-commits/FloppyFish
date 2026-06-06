@@ -33,8 +33,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
     private float scale = 1f;
     private float offsetX = 0f;
     private float offsetY = 0f;
-    private float phoneHeight = 0f;
-    private float phoneWidth = 0f;
+
     private float virtualHeight = 0f;
     private int score = 0;
     Paint birdPaint = new Paint();
@@ -96,8 +95,10 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
         getHolder().setFormat(PixelFormat.TRANSLUCENT);
         auraMonster = auramonsterMode;
 
+
         aurabackground = BitmapFactory.decodeResource(con.getResources(), R.drawable.background);
     }
+
 
 
 
@@ -125,10 +126,19 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
         {
             pipes[i].update(GameConstants.SCROLL_SPEED * dt);
 
-            if (RectF.intersects(bird.getHitbox(), pipes[i].getHitboxUp()) ||
-                    RectF.intersects(bird.getHitbox(), pipes[i].getHitboxDown(virtualHeight)))
+            float birdX = bird.getX() + bird.getSize();
+
+            float birdUY = bird.getY();
+            float birdDY = bird.getY() + bird.getSize();
+
+            float pipeX = pipes[i].getX();
+            float pipeUY = pipes[i].getY();
+            float pipeDY = pipes[i].getY()+pipes[i].getGapY();
+
+            if(birdX > pipeX && birdX - bird.getSize() < pipeX + pipes[i].getWidth())
             {
-                resetGame();
+                if(birdUY < pipeUY || birdDY > pipeDY)
+                    resetGame();
             }
         }
 
