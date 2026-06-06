@@ -26,16 +26,18 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
     </TextView>
-    <ImageView
+    <ImageButton
         android:id = "@+id/tempfish"
         android:layout_height="400dp"
         android:layout_width="wrap_content"
         android:contentDescription="Zebrafish"
+        android:background="#87CEEB"
+        android:scaleType="centerInside"
         android:src = "@drawable/tempfish"
         app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent">
-    </ImageView>
+    </ImageButton>
 
     <Button
         android:layout_width="@dimen/buttonwidth"

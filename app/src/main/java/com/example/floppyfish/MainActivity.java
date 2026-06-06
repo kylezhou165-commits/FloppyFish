@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     Flash flash = new Flash();
     Button cardsButton;
     Button gameButton;
-
+    ImageButton auraButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,19 @@ public class MainActivity extends AppCompatActivity {
             cardSetUp();
             gameButton = findViewById(R.id.gameb);
             cardsButton = findViewById(R.id.cardb);
+            auraButton = findViewById(R.id.tempfish);
+
+            auraButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Fragment_FloppyFish frag = new Fragment_FloppyFish(true);
+                    FragmentManager a = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = a.beginTransaction();
+                    fragmentTransaction.add(R.id.fragment_container_game, frag);
+                    fragmentTransaction.commit();
+                }
+            });
+
             cardsButton.setOnClickListener(new View.OnClickListener()
             {
                 public void onClick(View v)
@@ -51,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v)
                 {
-                    Fragment_FloppyFish frag = new Fragment_FloppyFish();
+                    Fragment_FloppyFish frag = new Fragment_FloppyFish(false);
                     FragmentManager a = getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = a.beginTransaction();
                     fragmentTransaction.add(R.id.fragment_container_game, frag);

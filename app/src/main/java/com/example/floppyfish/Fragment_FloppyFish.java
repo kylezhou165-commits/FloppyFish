@@ -14,10 +14,17 @@ import android.widget.Button;
 
 public class Fragment_FloppyFish extends Fragment {
     private GameView gameView;
+    private boolean auramode;
+
+    public Fragment_FloppyFish(boolean aura)
+    {
+        auramode = aura;
+    }
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        gameView = new GameView(requireContext(), true);
+        gameView = new GameView(requireContext(), auramode);
         return gameView;
     }
 
