@@ -1,6 +1,8 @@
 package com.example.floppyfish;
 
 import android.content.Context;
+import android.media.AudioAttributes;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
     Flash flash = new Flash();
     Button cardsButton;
     Button gameButton;
+    private MediaPlayer mp;
+
+    boolean firstTime = true;
+
     ImageButton auraButton;
 
     @Override
@@ -39,6 +45,22 @@ public class MainActivity extends AppCompatActivity {
             cardsButton = findViewById(R.id.cardb);
             auraButton = findViewById(R.id.tempfish);
 
+            mp = new MediaPlayer();
+            mp.setAudioAttributes(
+                    new AudioAttributes.Builder()
+                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                            .setUsage(AudioAttributes.USAGE_MEDIA)
+                            .build()
+            );
+
+            mp = MediaPlayer.create(this, R.raw.menue);
+
+            mp.setLooping(true);
+            if(firstTime) {
+                mp.start();
+            }
+
+            firstTime = false;
             auraButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -47,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
                     FragmentTransaction fragmentTransaction = a.beginTransaction();
                     fragmentTransaction.add(R.id.fragment_container_game, frag);
                     fragmentTransaction.commit();
+                    mp.pause();
+                    mp.release();
                 }
             });
 
@@ -70,7 +94,8 @@ public class MainActivity extends AppCompatActivity {
                     FragmentTransaction fragmentTransaction = a.beginTransaction();
                     fragmentTransaction.add(R.id.fragment_container_game, frag);
                     fragmentTransaction.commit();
-
+                    mp.pause();
+                    mp.release();
 
                 }
             });

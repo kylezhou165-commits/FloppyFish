@@ -213,6 +213,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
                 canvas.save();
                 canvas.translate(offsetX, offsetY);
                 canvas.scale(scale, scale);
+
                 canvas.drawBitmap(bird.getBitmap(), bird.getX(), bird.getY(), null);
 
                 for (int i = 0; i < PIPE_COUNT; i++)
