@@ -27,7 +27,8 @@ public class Pipe
 
         if(auraMonster) {
             gapY *= 1.3;
-            width *= .75;
+            width *= 2;
+
         }
         hitboxUp = new RectF(x, 0f, x + width, y); //Hitbox for up
         hitboxDown = new RectF(x, y + gapY, x + width, GameConstants.BASE_HEIGHT); //Hitbox for lower

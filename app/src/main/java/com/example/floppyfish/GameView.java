@@ -79,6 +79,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
     public GameView(Context context,  boolean auramonsterMode)
     {
         super(context);
+        auraMonster = auramonsterMode;
         con = context;
         mSurfaceHolder = getHolder();
         mSurfaceHolder.addCallback(this);
@@ -93,7 +94,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
         pipePaint.setColor(Color.GREEN);
         setZOrderOnTop(true);
         getHolder().setFormat(PixelFormat.TRANSLUCENT);
-        auraMonster = auramonsterMode;
+
 
 
         aurabackground = BitmapFactory.decodeResource(con.getResources(), R.drawable.background);
@@ -206,8 +207,8 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
                     {
                         RectF topper = p.getHitboxUp();
                         RectF bopper = p.getHitboxDown(virtualHeight);
-                        Bitmap up = stairs.createScaledBitmap(stairs, (int)p.getWidth()*3, (int)topper.bottom, true );
-                        Bitmap bottom = stairs.createScaledBitmap(stairs, (int)p.getWidth()*3, (int)(bopper.bottom - bopper.top), true );
+                        Bitmap up = stairs.createScaledBitmap(stairs, (int)p.getWidth(), (int)topper.bottom, true );
+                        Bitmap bottom = stairs.createScaledBitmap(stairs, (int)p.getWidth(), (int)(bopper.bottom - bopper.top), true );
 
 
                         canvas.drawBitmap(up, topper.left, topper.top, null);
