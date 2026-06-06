@@ -11,6 +11,8 @@ import android.graphics.Paint;
 
 import android.graphics.PixelFormat;
 import android.graphics.RectF;
+import android.media.AudioAttributes;
+import android.media.MediaPlayer;
 import android.util.AttributeSet;
 
 import android.util.Log;
@@ -39,6 +41,9 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
     Paint birdPaint = new Paint();
     Paint pipePaint = new Paint();
     public boolean running = true;
+
+    private MediaPlayer mp;
+    private MediaPlayer mpDeath;
 
     Context con;
 
@@ -95,7 +100,21 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
         setZOrderOnTop(true);
         getHolder().setFormat(PixelFormat.TRANSLUCENT);
 
+        mp = new MediaPlayer();
+        mp.setAudioAttributes(
+                new AudioAttributes.Builder()
+                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                        .setUsage(AudioAttributes.USAGE_MEDIA)
+                        .build()
+        );
 
+
+        if(auramonsterMode)
+            mp = MediaPlayer.create(con, R.raw.aurasong);
+
+
+        mp.setLooping(true);
+        mp.start();
 
         aurabackground = BitmapFactory.decodeResource(con.getResources(), R.drawable.background);
 
@@ -242,6 +261,8 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
     }
     private void resetGame()
     {
+        mpDeath = MediaPlayer.create(con, R.raw.auredeath);
+        mpDeath.start();
         bird.setY(200);
         bird.setVelocity(0f);
         createInitialPipes();
