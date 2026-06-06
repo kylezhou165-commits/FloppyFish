@@ -17,7 +17,7 @@ public class Fragment_FloppyFish extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        gameView = new GameView(requireContext());
+        gameView = new GameView(requireContext(), false);
         return gameView;
     }
 

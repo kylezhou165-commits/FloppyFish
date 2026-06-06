@@ -7,7 +7,7 @@ import android.graphics.RectF;
 
 public class Bird {
 
-    private float size = 24f;          // square size
+    private float size = 20f;          // square size
     private float x;                   // center or left position
     private float y;                   // top position
     private float velocity = 0f;       // vertical speed
@@ -19,7 +19,21 @@ public class Bird {
         y = startY;
         hitbox = new RectF(x, y, x + size, y + size);
         Bitmap badFish = BitmapFactory.decodeResource(context.getResources(), resourceId);
-        fish = badFish.createScaledBitmap(badFish, 24, 24, true );
+        fish = badFish.createScaledBitmap(badFish, (int)(size * 1.25), (int)(size * 1.25), true );
+    }
+
+    public Bird(Context context, float startX, float startY, int resourceId, boolean auraMonster) {
+        x = startX;
+        y = startY;
+
+        if(auraMonster)
+            size = 50;
+
+        hitbox = new RectF(x, y, x + size, y + size);
+        Bitmap badFish = BitmapFactory.decodeResource(context.getResources(), resourceId);
+        fish = badFish.createScaledBitmap(badFish, (int)(size + 4), (int)(size + 4), true );
+
+
     }
 
     public void update(float dt) {

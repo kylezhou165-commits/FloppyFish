@@ -20,6 +20,19 @@ public class Pipe
         hitboxDown = new RectF(x, y + gapY, x + width, GameConstants.BASE_HEIGHT); //Hitbox for lower
     }
 
+    public Pipe(float startX, float topY, boolean auraMonster)
+    {
+        x = startX; //Left point of pipe
+        y = topY; //Right point of pipe
+
+        if(auraMonster) {
+            gapY *= 1.3;
+            width *= .75;
+        }
+        hitboxUp = new RectF(x, 0f, x + width, y); //Hitbox for up
+        hitboxDown = new RectF(x, y + gapY, x + width, GameConstants.BASE_HEIGHT); //Hitbox for lower
+    }
+
     public void reset(float newX, float newY)
     {
         x = newX;
@@ -43,6 +56,10 @@ public class Pipe
         hitboxDown.offset(-speed, 0);
     }
 
+    public float getWidth()
+    {
+        return width;
+    }
     public float getX() {return x;}
 
     public boolean isOffScreen()

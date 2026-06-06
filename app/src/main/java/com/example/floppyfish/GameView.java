@@ -3,6 +3,8 @@ package com.example.floppyfish;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -22,22 +24,32 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 {
     private static final int PIPE_COUNT = 5;
     private final Bird bird;
+
+    private Bitmap aurabackground;
     private  Pipe[] pipes = new Pipe[PIPE_COUNT];
     private long lastTime;
+
+    private boolean auraMonster;
     private float scale = 1f;
     private float offsetX = 0f;
     private float offsetY = 0f;
+    private float phoneHeight = 0f;
+    private float phoneWidth = 0f;
     private float virtualHeight = 0f;
     private int score = 0;
     Paint birdPaint = new Paint();
     Paint pipePaint = new Paint();
     public boolean running = true;
 
+    Context con;
+
     private SurfaceHolder mSurfaceHolder;
     private Thread gameThread;
+
     public GameView(Context context)
     {
         super(context);
+        con = context;
         mSurfaceHolder = getHolder();
         mSurfaceHolder.addCallback(this);
         bird = new Bird(context, 100, 200, R.drawable.greenfish);
@@ -48,11 +60,13 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
         pipePaint.setColor(Color.GREEN);
         setZOrderOnTop(true);
         getHolder().setFormat(PixelFormat.TRANSLUCENT);
+        auraMonster = false;
     }
 
     public GameView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
+        con = context;
         mSurfaceHolder = getHolder();
         bird = new Bird(context, 100, 200, R.drawable.greenfish);
         createInitialPipes();
@@ -60,17 +74,42 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
         setOnClickListener(v -> bird.jump());
         birdPaint.setColor(Color.YELLOW);
         pipePaint.setColor(Color.GREEN);
-
+        auraMonster = false;
     }
+
+    public GameView(Context context,  boolean auramonsterMode)
+    {
+        super(context);
+        con = context;
+        mSurfaceHolder = getHolder();
+        mSurfaceHolder.addCallback(this);
+        if(!auramonsterMode)
+            bird = new Bird(context, 100, 200, R.drawable.greenfish);
+        else
+            bird = new Bird(context, 100, 200, R.drawable.auramonster, true);
+        createInitialPipes();
+        lastTime = System.nanoTime();
+        setOnClickListener(v -> bird.jump());
+        birdPaint.setColor(Color.YELLOW);
+        pipePaint.setColor(Color.GREEN);
+        setZOrderOnTop(true);
+        getHolder().setFormat(PixelFormat.TRANSLUCENT);
+        auraMonster = auramonsterMode;
+
+        aurabackground = BitmapFactory.decodeResource(con.getResources(), R.drawable.background);
+    }
+
+
 
 
     private void createInitialPipes()
     {
+
         for (int i = 0; i < PIPE_COUNT; i++)
         {
             float x = 400 + i * 300;
             float y = 100 + (float) (Math.random() * 300);
-            pipes[i] = new Pipe(x, y);
+            pipes[i] = new Pipe(x, y, auraMonster);
         }
     }
 
@@ -132,6 +171,10 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
                 update(dt);
                 canvas.drawColor(Color.MAGENTA);
                 canvas.drawColor(Color.CYAN);
+                if(auraMonster)
+                {
+                    canvas.drawBitmap(aurabackground, 0, 0, null);
+                }
                 canvas.save();
                 canvas.translate(offsetX, offsetY);
                 canvas.scale(scale, scale);
@@ -140,8 +183,23 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
                 for (int i = 0; i < PIPE_COUNT; i++)
                 {
                     Pipe p = pipes[i];
-                    canvas.drawRect(p.getHitboxUp(), pipePaint);
-                    canvas.drawRect(p.getHitboxDown(virtualHeight), pipePaint);
+                    if(!auraMonster) {
+                        canvas.drawRect(p.getHitboxUp(), pipePaint);
+                        canvas.drawRect(p.getHitboxDown(virtualHeight), pipePaint);
+                    }
+                    else
+                    {
+                        Bitmap stairs = BitmapFactory.decodeResource(con.getResources(), R.drawable.stairs);
+                        RectF topper = p.getHitboxUp();
+                        RectF bopper = p.getHitboxDown(virtualHeight);
+                        Bitmap up = stairs.createScaledBitmap(stairs, (int)p.getWidth()*3, (int)topper.bottom, true );
+                        Bitmap bottom = stairs.createScaledBitmap(stairs, (int)p.getWidth()*3, (int)(bopper.bottom - bopper.top), true );
+
+
+                        canvas.drawBitmap(up, topper.left, topper.top, null);
+                        canvas.drawBitmap(bottom, bopper.left, bopper.top, null);
+                    }
+
                 }
                 mSurfaceHolder.unlockCanvasAndPost(canvas);
 
