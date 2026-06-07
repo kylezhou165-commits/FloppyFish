@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -55,9 +56,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView text;
+        Button editButton;
+        Button deleteButton;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            editButton = itemView.findViewById(R.id.edit);
+            editButton.setText("edit");
 
+            deleteButton = itemView.findViewById(R.id.delete);
+            deleteButton.setText("delete");
             text = itemView.findViewById(R.id.text);
         }
     }
