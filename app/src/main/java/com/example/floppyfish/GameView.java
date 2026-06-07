@@ -24,7 +24,7 @@ import androidx.annotation.NonNull;
 
 public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Callback
 {
-    private static final int PIPE_COUNT = 5;
+    private static final int PIPE_COUNT = 3;
     private final Bird bird;
 
     private Bitmap aurabackground;
