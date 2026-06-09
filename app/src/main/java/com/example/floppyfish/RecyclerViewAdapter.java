@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,22 +31,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        ArrayList<Card> cards = flash.getCards();
-
-        if (cards.get(position).getFlipped())
-            holder.text.setText(cards.get(position).getAnswer());
-        else
-            holder.text.setText(cards.get(position).getValue());
-
-        holder.text.setOnClickListener(view -> {
-            cards.get(position).flip();
-            if (cards.get(position).getFlipped() == true)
-                holder.text.setText(cards.get(position).getAnswer());
-            else
-                holder.text.setText(cards.get(position).getValue());
-        }
-        );
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position)
+    {
+        Card currentCard = flash.getCards().get(position);
+        holder.front.setText(currentCard.getValue());
+        holder.front.setOnFocusChangeListener(new View.OnFocusChangeListener()
+        {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus)
+            {
+                if (!hasFocus)
+                {
+                    currentCard.setValue(holder.front.getText().toString());
+                }
+            }
+        });
     }
 
     @Override
@@ -55,17 +55,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView text;
-        Button editButton;
-        Button deleteButton;
+        EditText front;
+        EditText back;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            editButton = itemView.findViewById(R.id.edit);
-            editButton.setText("edit");
-
-            deleteButton = itemView.findViewById(R.id.delete);
-            deleteButton.setText("delete");
-            text = itemView.findViewById(R.id.text);
+            front = itemView.findViewById(R.id.front);
+            back = itemView.findViewById(R.id.back);
         }
     }
 }

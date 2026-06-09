@@ -43,7 +43,15 @@ public class Card implements Serializable
     {
         return flipped;
     }
+    public void setValue(String v)
+    {
+        this.value = v;
+    }
 
+    public void setAnswer(String a)
+    {
+        this.answer = a;
+    }
     public void flip()
     {
         if(flipped == true)
