@@ -108,14 +108,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void cardSetUp()
     {
-        String[] defs = getResources().getStringArray(R.array.card_defs);
-        String[] anses = getResources().getStringArray(R.array.card_anses);
-
-        for(int i = 0; i < defs.length; i++)
+        for(int i = 0; i < 2; i++)
         {
-            String a = defs[i];
-            String b = anses[i];
-            flash.add(a,b);
+            flash.add("","");
         }
     }
 

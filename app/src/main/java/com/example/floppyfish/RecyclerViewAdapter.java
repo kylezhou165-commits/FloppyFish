@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>{
     Context context;
-    Flash flash;
+    static Flash flash;
     public RecyclerViewAdapter(Context context, Flash flash)
     {
         this.context = context;
@@ -53,14 +54,25 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return flash.getCards().size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder{
 
         EditText front;
         EditText back;
+        ImageButton deleteButton;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             front = itemView.findViewById(R.id.front);
             back = itemView.findViewById(R.id.back);
+            deleteButton = itemView.findViewById(R.id.deletebutton);
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(flash.getSize() > 1)
+                        flash.remove(flash.getSize() - 1);
+                    else {}
+                    notifyDataSetChanged();
+                }
+            });
         }
     }
 }

@@ -26,6 +26,7 @@ public class Fragment_Quizlet extends Fragment {
     RecyclerViewAdapter adapter;
     Button addCard;
     MediaPlayer m;
+    final int deckId = 1;
 
     public Fragment_Quizlet(MediaPlayer mp) {
 
@@ -35,9 +36,7 @@ public class Fragment_Quizlet extends Fragment {
     }
 
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup view, Bundle savedInstanceState)
-
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup view, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.notecards, view, false);
     }
 
@@ -53,6 +52,8 @@ public class Fragment_Quizlet extends Fragment {
         cardReturnButton = view.findViewById(R.id.returnB);
         cardReturnButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                QuizletDatabase db = QuizletDatabase.getDatabase(requireContext());
+                Flash.saveCardsToDb(db.deckDao(), deckId, flash);
                 getParentFragmentManager().beginTransaction()
                         .remove(Fragment_Quizlet.this)
                         .commit();
@@ -69,14 +70,11 @@ public class Fragment_Quizlet extends Fragment {
 
 
     private void cardSetUp() {
-        String[] defs = getResources().getStringArray(R.array.card_defs);
-        String[] anses = getResources().getStringArray(R.array.card_anses);
-
-        for (int i = 0; i < defs.length; i++) {
-            String a = defs[i];
-            String b = anses[i];
-            flash.add(a, b);
+        for (int i = 0; i < 2; i++) {
+            flash.add("", "");
         }
     }
 }
+
+
 

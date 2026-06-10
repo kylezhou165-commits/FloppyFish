@@ -11,4 +11,8 @@
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintRight_toRightOf="parent"
     android:id="@+id/game"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/question"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

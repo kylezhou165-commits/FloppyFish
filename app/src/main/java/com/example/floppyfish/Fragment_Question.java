@@ -4,6 +4,8 @@ package com.example.floppyfish;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,25 +22,57 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 public class Fragment_Question extends Fragment {
-    Button cardReturnButton;
     private Flash flash;
-    RecyclerView recyclerView;
-    RecyclerViewAdapter adapter;
-    Button addCard;
-    MediaPlayer m;
+    Button A;
 
-    public Fragment_Question(MediaPlayer mp) {
+    Button B;
 
-        super(R.layout.notecards);
-        flash = new Flash();
-        m = mp;
+    Button C;
+    Button D;
+
+    Button backToGame;
+
+    public Fragment_Question() {
+
+        super(R.layout.quiz);
     }
 
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup view, Bundle savedInstanceState)
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.quiz, container, false);
 
-    {
-        return inflater.inflate(R.layout.quiz, view, false);
+        A = view.findViewById(R.id.button);
+        B = view.findViewById(R.id.button2);
+        C = view.findViewById(R.id.button3);
+        D = view.findViewById(R.id.button4);
+        backToGame = view.findViewById(R.id.button5);
+        backToGame.setOnClickListener(v -> getParentFragmentManager().beginTransaction().remove(this).commit());
+        new Thread(() -> {
+            QuizletDatabase db = QuizletDatabase.getDatabase(requireContext());
+            this.flash = Flash.loadSync(db.deckDao(), 1);
+            new Handler(Looper.getMainLooper()).post(() -> {
+                if (this.flash == null || this.flash.getCards().isEmpty()) return;
+                int randomIndex = (int) (Math.random() * this.flash.getCards().size());
+                Card correctCard = this.flash.getCards().get(randomIndex);
+                ArrayList<String> options = new ArrayList<>();
+                options.add(correctCard.answer);
+                while (options.size() < 4) {
+                    String randomWrong = this.flash.getCards().get((int)(Math.random() * this.flash.getCards().size())).answer;
+                    if (!options.contains(randomWrong)) options.add(randomWrong);
+                }
+                java.util.Collections.shuffle(options);
+                Button[] buttons = {A, B, C, D};
+                for (int i = 0; i < 4; i++) {
+                    buttons[i].setText(options.get(i));
+                    final String answer = options.get(i);
+                    buttons[i].setOnClickListener(v -> {
+                        String msg = answer.equals(correctCard.answer) ? "Right!" : "Wrong!";
+                        com.google.android.material.snackbar.Snackbar.make(view, msg, 1000).show();
+                    });
+                }
+            });
+        }).start();
+        return view;
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {

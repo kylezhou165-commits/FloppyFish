@@ -3,6 +3,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Entity;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.PrimaryKey;
 import androidx.room.Query;
 import androidx.room.Transaction;
@@ -23,7 +24,7 @@ public interface DeckDAO
   @Insert
   long insertDeck(Deck deck);
 
-  @Insert
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
   void insertFlashcards(List<Flashcard> flashcards);
 
   @Update
@@ -34,4 +35,7 @@ public interface DeckDAO
 
   @Delete
   void deleteDeck(Deck deck);
+
+  @Insert
+  void insert(Flashcard card);
 }

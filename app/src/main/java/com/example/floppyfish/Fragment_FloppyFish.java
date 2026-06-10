@@ -27,5 +27,27 @@ public class Fragment_FloppyFish extends Fragment {
         gameView = new GameView(requireContext(), auramode);
         return gameView;
     }
+    public void onGameOver() {
+
+        if (gameView != null) {
+            gameView.running = false;
+
+            // Clean up audio
+            if (gameView.mp != null) {
+                gameView.mp.stop();
+                gameView.mp.release();
+            }
+            if (gameView.mpDeath != null) {
+                gameView.mpDeath.release();
+            }
+
+            gameView.getHolder().getSurface().release();
+        }
+
+        getParentFragmentManager().beginTransaction()
+                .remove(this)
+                .replace(android.R.id.content, new Fragment_Question())
+                .commit();
+    }
 
 }

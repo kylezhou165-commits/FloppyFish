@@ -42,13 +42,14 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
     Paint pipePaint = new Paint();
     public boolean running = true;
 
-    private MediaPlayer mp;
-    private MediaPlayer mpDeath;
+    MediaPlayer mp;
+    MediaPlayer mpDeath;
 
     Context con;
 
     private SurfaceHolder mSurfaceHolder;
     private Thread gameThread;
+    private androidx.fragment.app.FragmentManager fragmentManager;
 
     public GameView(Context context)
     {
@@ -259,15 +260,22 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
                 throw new RuntimeException(e);
             }
         }
+        if (mp != null) {
+            mp.stop();
+            mp.release();
+            mp = null;
+        }
+
+        if (aurabackground != null) {
+            aurabackground.recycle();
+            aurabackground = null;
+        }
     }
-    private void resetGame()
-    {
-        mpDeath = MediaPlayer.create(con, R.raw.auredeath);
-        mpDeath.start();
-        bird.setY(200);
-        bird.setVelocity(0f);
-        createInitialPipes();
-        lastTime = System.nanoTime();
+    private void resetGame() {
+
+            mpDeath = MediaPlayer.create(con, R.raw.auredeath);
+            mpDeath.start();
+
     }
 
     public void surfaceChanged(@NonNull SurfaceHolder holder, int format, int width, int height) {
