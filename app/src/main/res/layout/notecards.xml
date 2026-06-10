@@ -29,6 +29,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/notelist"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/addButton"/>
+    <Button
+        android:layout_width="@dimen/buttonwidth"
+        android:layout_height="@dimen/buttonheight"
+        android:id = "@+id/addButton"
+        android:text = "Add Card"
+        android:textSize="@dimen/buttonts"
+        android:backgroundTint="@color/buttonc"
+        android:clickable = "true"
+        android:focusable = "true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/notelist"
+        app:layout_constraintLeft_toRightOf="@id/returnB"
         app:layout_constraintRight_toRightOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView

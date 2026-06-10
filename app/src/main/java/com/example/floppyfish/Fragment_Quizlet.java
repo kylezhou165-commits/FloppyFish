@@ -24,7 +24,7 @@ public class Fragment_Quizlet extends Fragment {
     private Flash flash;
     RecyclerView recyclerView;
     RecyclerViewAdapter adapter;
-
+    Button addCard;
     MediaPlayer m;
 
     public Fragment_Quizlet(MediaPlayer mp) {
@@ -56,6 +56,13 @@ public class Fragment_Quizlet extends Fragment {
                 getParentFragmentManager().beginTransaction()
                         .remove(Fragment_Quizlet.this)
                         .commit();
+            }
+        });
+        addCard = view.findViewById(R.id.addButton);
+        addCard.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                flash.add("", "");
+                adapter.notifyDataSetChanged();
             }
         });
     }

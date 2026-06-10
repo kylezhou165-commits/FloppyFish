@@ -47,5 +47,13 @@ public class Flash
         Collections.shuffle(arr);
         pointer = 0;
     }
+    public String getRandomAnswer()
+    {
+        if(arr.size() > 1)
+            return arr.get((int) (Math.random() * arr.size())).getAnswer();
+        else
+            return "gng wtf we doing";
+    }
+
 
 }

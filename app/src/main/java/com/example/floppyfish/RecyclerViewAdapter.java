@@ -50,7 +50,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return flash.getCards().size() / 2;
+        return flash.getCards().size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
