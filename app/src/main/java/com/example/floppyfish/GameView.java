@@ -112,8 +112,9 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
         if(auramonsterMode)
             mp = MediaPlayer.create(con, R.raw.aurasong);
-
-
+        else
+            mp = MediaPlayer.create(con, R.raw.firemusic);
+        mp.setVolume(1.0f, 1.0f);
         mp.setLooping(true);
         mp.start();
 
